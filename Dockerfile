@@ -22,7 +22,7 @@ FROM nginx:stable-alpine as runner
 COPY --from=builder /app/dist /usr/share/nginx/html
 
 # Expose the port the app listens on
-EXPOSE 8080
+EXPOSE 80
 
 # Set the build argument for the app version number
 ARG APP_VERSION=0.1.0
