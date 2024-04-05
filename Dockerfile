@@ -1,19 +1,7 @@
-FROM mcr.microsoft.com/dotnet/aspnet:3.1 AS base
-WORKDIR /app
+FROM nginx:1.18
+RUN curl -sL https://deb.nodesource.com/setup_14.x | bash - && apt-get update -y && apt-get install -y git curl nodejs && curl -sL https://github.com/gohugoio/hugo/releases/download/v0.72.0/hugo_extended_0.72.0_Linux-64bit.tar.gz | tar -xz hugo && mv hugo /usr/bin && npm i -g postcss-cli autoprefixer postcss
+RUN git clone https://github.com/MicrosoftDocs/mslearn-aks-deployment-pipeline-github-actions /contoso-website
+WORKDIR /contoso-website/src
+RUN git submodule update --init themes/introduction
+RUN hugo && mv public/* /usr/share/nginx/html
 EXPOSE 80
-
-FROM mcr.microsoft.com/dotnet/sdk:3.1 AS build
-WORKDIR /src
-COPY ["SampleWeb/SampleWeb.csproj", "SampleWeb/"]
-RUN dotnet restore "SampleWeb/SampleWeb.csproj"
-COPY . .
-WORKDIR "/src/SampleWeb"
-RUN dotnet build "SampleWeb.csproj" -c Release -o /app
-
-FROM build AS publish
-RUN dotnet publish "SampleWeb.csproj" -c Release -o /app
-
-FROM base AS final
-WORKDIR /app
-COPY --from=publish /app .
-ENTRYPOINT ["dotnet", "SampleWeb.dll"]
