@@ -1,0 +1,9 @@
+image:
+  registry: mytiuktest
+  name: contoso-website
+  tag: latest
+  
+  ingress:
+  ## If true, Kubernetes Dashboard Ingress will be created.
+  ##
+  enabled: false

@@ -1,0 +1,4 @@
+apiVersion: v2
+name: contoso-website
+description: Contoso company test site
+version: 0.1.0
