@@ -3,7 +3,7 @@ image:
   name: contoso-website
   tag: latest
   
-  ingress:
+ingress:
   ## If true, Kubernetes Dashboard Ingress will be created.
   ##
   enabled: false
