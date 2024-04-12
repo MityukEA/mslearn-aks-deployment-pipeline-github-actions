@@ -1,20 +1,11 @@
-# Base Image
-FROM golang:latest
+FROM busybox:latest
+ENV PORT=80
 
-# Set the Current Working Directory inside the container
-WORKDIR /app
+ADD index.html /www/index.html
 
-# Copy everything from the current directory to the PWD(Present Working Directory) inside the container
-COPY . .
+# EXPOSE $PORT
 
-# Download all the dependencies
-RUN go mod download
+HEALTHCHECK CMD nc -z localhost $PORT
 
-# Build the Go app
-RUN go build -o main .
-
-# Expose port 80 to the outside world
-EXPOSE 80
-
-# Command to run the executable
-CMD ["./main"]
+# Create a basic webserver and run it until the container is stopped
+CMD echo "httpd started" && trap "exit 0;" TERM INT; httpd -v -p $PORT -h /www -f & wait
