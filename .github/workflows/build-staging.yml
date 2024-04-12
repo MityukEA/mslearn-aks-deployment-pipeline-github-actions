@@ -13,7 +13,7 @@ jobs:
   # This workflow contains a single job called "build"
   build_push_image:
     # The type of runner that the job will run on
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -38,7 +38,7 @@ jobs:
           tags: ${{secrets.ACR_NAME}}/contoso-website:latest
 
   deploy:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     needs: build_push_image
     permissions:
       id-token: write
