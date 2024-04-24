@@ -3,7 +3,6 @@ image:
   name: contoso-website
   tag: latest
   
-replicaCount: 3
   
 ingress:
   ## If true, Kubernetes Dashboard Ingress will be created.
